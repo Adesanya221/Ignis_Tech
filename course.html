@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course — Ignis Tech</title>
+  <meta name="description" content="Ignis Tech course roadmap — what you'll learn, stage by stage, and how to start today." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E🔥%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/course.css" />
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand" aria-label="Ignis Tech home">
+        <span class="brand-slash">/</span>
+        <span class="brand-stack">
+          <span class="brand-top">IGNIS</span>
+          <span class="brand-sub">TECH</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="index.html#home" class="nav-link">Home</a>
+        <a href="index.html#courses" class="nav-link">Courses</a>
+        <a href="index.html#services" class="nav-link">Services</a>
+        <a href="index.html#about" class="nav-link">About</a>
+        <a href="index.html#contact" class="nav-link">Contact</a>
+        <a href="index.html#join" class="btn btn-red btn-sm nav-cta">Get Started →</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ COURSE HERO ============ -->
+  <section class="course-hero">
+    <div class="container course-hero-grid">
+      <div class="course-hero-copy">
+        <a href="index.html#services" class="back-link">← All Courses</a>
+        <span class="eyebrow eyebrow-light" id="cEyebrow">Ignis Tech Course</span>
+        <h1 class="course-title" id="cTitle">Course</h1>
+        <p class="course-tagline" id="cTagline"></p>
+        <div class="course-meta" id="cMeta"></div>
+        <div class="course-hero-cta">
+          <a class="btn btn-red" id="cEnrollTop" href="#" target="_blank" rel="noopener"><i data-lucide="message-circle"></i> Enroll on WhatsApp</a>
+          <a class="btn btn-outline-dark" href="#start">Start Today ↓</a>
+        </div>
+      </div>
+      <div class="course-hero-img reveal" id="cHeroImg"></div>
+    </div>
+  </section>
+
+  <!-- ============ ROADMAP ============ -->
+  <section class="roadmap-section">
+    <div class="container">
+      <div class="section-head section-head-light reveal">
+        <span class="eyebrow eyebrow-light">Learning Roadmap</span>
+        <h2 class="section-title">What You'll <span class="text-red">Learn</span></h2>
+        <p class="section-sub">Stage by stage, skill by skill — no guesswork, just a clear path from day one to done.</p>
+      </div>
+      <ol class="roadmap" id="cRoadmap"></ol>
+    </div>
+  </section>
+
+  <!-- ============ DETAILS + WHAT YOU'LL BUILD ============ -->
+  <section class="course-details">
+    <div class="container">
+      <div class="detail-cards" id="cDetails"></div>
+
+      <div class="build-grid">
+        <div class="build-copy reveal">
+          <span class="eyebrow">What You'll Build</span>
+          <h2 class="section-title">Real Work, <span class="text-red">Real Results</span></h2>
+          <p class="section-sub" id="cBuildDesc"></p>
+          <a class="btn btn-red" id="cEnrollBuild" href="#" target="_blank" rel="noopener">Start This Course →</a>
+        </div>
+        <div class="reveal" id="cBuildImg"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLASSROOM ============ -->
+  <section class="classroom">
+    <div class="container classroom-grid">
+      <div class="reveal" id="cClassImg"></div>
+      <div class="classroom-copy reveal">
+        <span class="eyebrow eyebrow-light">How You'll Learn</span>
+        <h2 class="section-title">Learn By Doing</h2>
+        <p class="section-sub">
+          Multiple class options to fit your life: join live sessions on
+          <b>Google Meet</b> or <b>Microsoft Teams</b> from anywhere, or learn
+          in person at our Lagos hub. Small groups, hands-on practice and real
+          mentorship — every session ends with something you've built yourself.
+        </p>
+        <ul class="join-points">
+          <li><span><i data-lucide="video"></i></span>Google Meet &amp; Teams classes</li>
+          <li><span><i data-lucide="users"></i></span>Live mentorship</li>
+          <li><span><i data-lucide="timer"></i></span>Learn at your own pace</li>
+          <li><span><i data-lucide="award"></i></span>Certificate on completion</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ START TODAY ============ -->
+  <section class="start" id="start">
+    <div class="container start-inner">
+      <span class="eyebrow" id="cStartEyebrow">Enrollment Open</span>
+      <h2 class="section-title">Start <span class="text-red">Today</span></h2>
+      <p class="section-sub">
+        Message us on WhatsApp and we'll get you set up within the hour.
+      </p>
+      <a class="btn btn-whatsapp btn-xl" id="cEnrollBig" href="#" target="_blank" rel="noopener">
+        <i data-lucide="message-circle"></i> Chat With Us on WhatsApp
+      </a>
+      <div class="start-alt">
+        <a href="tel:+2349058177116"><i data-lucide="phone"></i> +234 905 817 7116</a>
+        <a href="mailto:info@ignistech.org"><i data-lucide="mail"></i> info@ignistech.org</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <span class="brand-slash">/</span>
+          <span class="brand-stack">
+            <span class="brand-top">IGNIS</span>
+            <span class="brand-sub">TECH</span>
+          </span>
+        </a>
+        <p class="footer-tagline">Learn · Build · Grow</p>
+        <div class="socials footer-socials">
+          <a href="#" onclick="return false" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+          <a href="#" onclick="return false" aria-label="X (Twitter)"><i data-lucide="twitter"></i></a>
+          <a href="#" onclick="return false" aria-label="YouTube"><i data-lucide="youtube"></i></a>
+          <a href="#" onclick="return false" aria-label="TikTok"><i data-lucide="music-2"></i></a>
+        </div>
+      </div>
+      <nav class="footer-col" aria-label="Quick links">
+        <h4>Quick Links</h4>
+        <a href="index.html#home">Home</a>
+        <a href="index.html#courses">Courses</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:info@ignistech.org"><i data-lucide="mail"></i> info@ignistech.org</a>
+        <a href="tel:+2349058177116"><i data-lucide="phone"></i> +234 905 817 7116</a>
+        <a href="https://wa.me/2349058177116" target="_blank" rel="noopener"><i data-lucide="message-circle"></i> WhatsApp Us</a>
+        <a href="#" onclick="return false"><i data-lucide="map-pin"></i> Lagos, Nigeria</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>© 2025 Ignis Tech. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+  <script src="js/courses-data.js"></script>
+  <script src="js/course-page.js"></script>
+</body>
+</html>

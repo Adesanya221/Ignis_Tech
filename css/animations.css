@@ -1,0 +1,180 @@
+/* ==========================================================================
+   21st.dev-style motion pack (vanilla recreation — no React needed)
+   Border Beam · Text Shine · Aurora · Marquee · Spotlight · Tilt
+   ========================================================================== */
+
+/* ---------- 1. Border Beam (traveling light on card borders) ---------- */
+@property --beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.service-card,
+.ai-visual {
+  position: relative;
+}
+/* only enable the beam where the mask trick is fully supported —
+   otherwise the gradient would flood over the whole card on old mobile browsers */
+@supports ((-webkit-mask-composite: xor) or (mask-composite: exclude)) {
+  .service-card::before,
+  .ai-visual::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from var(--beam-angle),
+      transparent 0deg,
+      transparent 260deg,
+      rgba(255, 70, 80, 0.9) 320deg,
+      transparent 360deg
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: beam-spin 4.5s linear infinite;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .ai-visual::before {
+    animation-duration: 6s;
+  }
+}
+@keyframes beam-spin {
+  to { --beam-angle: 360deg; }
+}
+
+/* ---------- 2. Text Shine (light sweep across headline) ---------- */
+.shine-text {
+  background: linear-gradient(110deg, #e31e28 42%, #ffb3b6 50%, #e31e28 58%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shine-sweep 3.2s linear infinite;
+}
+@keyframes shine-sweep {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+/* ---------- 3. Aurora (drifting glow blobs on dark sections) ---------- */
+.about,
+.ai {
+  position: relative;
+  overflow: hidden;
+}
+.about::before,
+.ai::after {
+  content: "";
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  filter: blur(110px);
+  pointer-events: none;
+  z-index: 0;
+}
+.about::before {
+  top: -180px;
+  right: -120px;
+  background: radial-gradient(circle, rgba(227, 30, 40, 0.28), transparent 70%);
+  animation: aurora-drift 14s ease-in-out infinite alternate;
+}
+.ai::after {
+  bottom: -200px;
+  left: -140px;
+  background: radial-gradient(circle, rgba(120, 30, 220, 0.16), transparent 70%);
+  animation: aurora-drift 18s ease-in-out infinite alternate-reverse;
+}
+.about > .container,
+.ai > .container { position: relative; z-index: 1; }
+@keyframes aurora-drift {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(-70px, 60px) scale(1.18); }
+}
+
+/* ---------- 4. Marquee ticker ---------- */
+.marquee {
+  background: var(--red);
+  overflow: hidden;
+  padding: 0.9rem 0;
+  transform: rotate(0deg);
+}
+.marquee-track {
+  display: flex;
+  gap: 2.6rem;
+  width: max-content;
+  animation: marquee-scroll 22s linear infinite;
+}
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee-track span {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 2.6rem;
+}
+.marquee-track span::after {
+  content: "✦";
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- 5. Spotlight hover (mouse-following glow on cards) ---------- */
+.service-card,
+.ai-card,
+.about-benefits li {
+  position: relative;
+  overflow: hidden;
+}
+.service-card::after,
+.ai-card::after,
+.about-benefits li::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(227, 30, 40, 0.12),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 1;
+}
+.service-card:hover::after,
+.ai-card:hover::after,
+.about-benefits li:hover::after { opacity: 1; }
+
+/* ---------- 6. 3D tilt on hero photo ---------- */
+.tilt-wrap { perspective: 1000px; }
+.hero-visual.tilt {
+  transition: transform 0.15s ease-out;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ---------- Accessibility: kill all motion if requested ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .service-card::before,
+  .ai-visual::before,
+  .shine-text,
+  .about::before,
+  .ai::after,
+  .marquee-track { animation: none !important; }
+  .shine-text { color: var(--red); background: none; -webkit-background-clip: initial; background-clip: initial; }
+}
