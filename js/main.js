@@ -45,6 +45,13 @@ const revealObserver = new IntersectionObserver(
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("visible");
+        const servicesGrid = entry.target.closest(".services-grid");
+        if (servicesGrid) {
+          servicesGrid.querySelectorAll(".service-card").forEach((card) => {
+            card.classList.add("visible");
+            obs.unobserve(card);
+          });
+        }
         obs.unobserve(entry.target);
       }
     });
