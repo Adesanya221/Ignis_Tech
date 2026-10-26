@@ -115,91 +115,128 @@ if (heroVisual && finePointer && !window.matchMedia("(prefers-reduced-motion: re
   });
 }
 
-/* ---------- Signup form (demo — connect to your backend later) ---------- */
+/* ---------- Signup form (guarded — commented out in favor of WhatsApp booking) ---------- */
 const form = document.getElementById("joinForm");
-const status = document.getElementById("formStatus");
-const submitBtn = form.querySelector("button[type=submit]");
+if (form) {
+  const status = document.getElementById("formStatus");
+  const submitBtn = form.querySelector("button[type=submit]");
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  const name = form.name.value.trim();
-  const email = form.email.value.trim();
-  const interest = form.interest.value;
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const interest = form.interest.value;
 
-  if (!name || !email || !interest) {
-    status.textContent = "Please fill in all fields.";
-    status.className = "form-status err";
-    return;
-  }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    status.textContent = "Please enter a valid email address.";
-    status.className = "form-status err";
-    return;
-  }
+    if (!name || !email || !interest) {
+      status.textContent = "Please fill in all fields.";
+      status.className = "form-status err";
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      status.textContent = "Please enter a valid email address.";
+      status.className = "form-status err";
+      return;
+    }
 
-  // Demo submit — replace with a fetch() to your API / Google Form / Formspree
-  submitBtn.disabled = true;
-  submitBtn.textContent = "Creating Account…";
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Creating Account…";
 
-  setTimeout(() => {
-    status.textContent = `Welcome aboard, ${name.split(" ")[0]}! 🔥 Check your email to finish setting up your account.`;
-    status.className = "form-status ok";
-    form.reset();
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Create Account →";
-  }, 900);
-});
+    setTimeout(() => {
+      status.textContent = `Welcome aboard, ${name.split(" ")[0]}! 🔥 Check your email to finish setting up your account.`;
+      status.className = "form-status ok";
+      form.reset();
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Create Account →";
+    }, 900);
+  });
+}
 
 /* ---------- Booking form → WhatsApp ---------- */
 const WHATSAPP_NUMBER = "2349058177116"; // +234 905 817 7116
 const bookForm = document.getElementById("bookForm");
 const bookStatus = document.getElementById("bookStatus");
 
-bookForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  // Honeypot: real users never fill this — bots do. Silently drop them.
-  if (bookForm.company.value) {
-    bookStatus.textContent = "Thank you! We'll be in touch shortly.";
-    bookStatus.className = "form-status ok";
-    return;
+if (bookForm) {
+  // Pre-select service if passed in URL query e.g. ?service=web-development
+  const urlParams = new URLSearchParams(window.location.search);
+  const preselect = urlParams.get("service") || urlParams.get("course");
+  if (preselect && bookForm.service) {
+    const term = preselect.toLowerCase();
+    for (let opt of bookForm.service.options) {
+      if (opt.value.toLowerCase().includes(term)) {
+        bookForm.service.value = opt.value;
+        break;
+      }
+    }
   }
 
-  const name = bookForm.name.value.trim();
-  const phone = bookForm.phone.value.trim();
-  const service = bookForm.service.value;
-  const message = bookForm.message.value.trim();
+  bookForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  if (!name || !phone || !service) {
-    bookStatus.textContent = "Please fill in your name, phone number and select a service.";
-    bookStatus.className = "form-status err";
-    return;
-  }
-  if ((phone.match(/\d/g) || []).length < 7) {
-    bookStatus.textContent = "Please enter a valid phone / WhatsApp number.";
-    bookStatus.className = "form-status err";
-    return;
-  }
+    // Honeypot: real users never fill this — bots do. Silently drop them.
+    if (bookForm.company && bookForm.company.value) {
+      if (bookStatus) {
+        bookStatus.textContent = "Thank you! We'll be in touch shortly.";
+        bookStatus.className = "form-status ok";
+      }
+      return;
+    }
 
-  // Compose the booking message with the visitor's info
-  const lines = [
-    `Hi Ignis Tech! New booking enquiry from the website:`,
-    ``,
-    `👤 Name: ${name}`,
-    `📞 Phone: ${phone}`,
-    `🎯 Service: ${service}`,
-  ];
-  if (message) lines.push(`📝 Details: ${message}`);
+    const name = bookForm.name.value.trim();
+    const phone = bookForm.phone.value.trim();
+    const service = bookForm.service.value;
+    const message = bookForm.message.value.trim();
 
-  const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
+    if (!name || !phone || !service) {
+      if (bookStatus) {
+        bookStatus.textContent = "Please fill in your name, phone number and select a service.";
+        bookStatus.className = "form-status err";
+      }
+      return;
+    }
+    if ((phone.match(/\d/g) || []).length < 7) {
+      if (bookStatus) {
+        bookStatus.textContent = "Please enter a valid phone / WhatsApp number.";
+        bookStatus.className = "form-status err";
+      }
+      return;
+    }
 
-  bookStatus.textContent = `Opening WhatsApp to send your booking, ${name.split(" ")[0]}…`;
-  bookStatus.className = "form-status ok";
-  window.open(waUrl, "_blank", "noopener");
+    // Compose the booking message with the visitor's chosen service & info
+    const lines = [
+      `Hi Ignis Tech! New booking enquiry from the website:`,
+      ``,
+      `👤 Name: ${name}`,
+      `📞 Phone: ${phone}`,
+      `🎯 Service: ${service}`,
+    ];
+    if (message) lines.push(`📝 Details: ${message}`);
 
-  setTimeout(() => {
-    bookStatus.textContent = "✓ Sent! If WhatsApp didn't open, tap the Chat on WhatsApp button beside the form.";
-    bookForm.reset();
-  }, 1500);
-});
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
+
+    if (bookStatus) {
+      bookStatus.textContent = `Opening WhatsApp to send your booking, ${name.split(" ")[0]}…`;
+      bookStatus.className = "form-status ok";
+    }
+    window.open(waUrl, "_blank", "noopener");
+
+    setTimeout(() => {
+      if (bookStatus) {
+        bookStatus.textContent = "✓ Sent! If WhatsApp didn't open, reach out directly at +234 905 817 7116.";
+      }
+      bookForm.reset();
+    }, 1500);
+  });
+}
+
+/* ---------- Endless Courses Carousel: touch pause ---------- */
+const coursesTrack = document.getElementById("coursesTrack");
+if (coursesTrack) {
+  coursesTrack.addEventListener("touchstart", () => {
+    coursesTrack.style.animationPlayState = "paused";
+  }, { passive: true });
+  coursesTrack.addEventListener("touchend", () => {
+    coursesTrack.style.animationPlayState = "running";
+  }, { passive: true });
+}

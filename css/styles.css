@@ -406,6 +406,53 @@ section { padding: 5.5rem 0; }
 .services-head .section-sub { color: var(--text-gray); margin-bottom: 0; max-width: 520px; }
 .services-head-cta { flex-shrink: 0; }
 
+/* ---------- Endless Courses Carousel ---------- */
+.courses-carousel-wrap {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 1.2rem 0 2.2rem;
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.courses-carousel-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: courses-loop 24s linear infinite;
+}
+
+.courses-carousel-wrap:hover .courses-carousel-track,
+.courses-carousel-wrap:focus-within .courses-carousel-track {
+  animation-play-state: paused;
+}
+
+.courses-carousel-group {
+  display: flex;
+  gap: 1.5rem;
+  padding-right: 1.5rem;
+  flex-shrink: 0;
+}
+
+.courses-carousel-group .service-card {
+  width: 290px;
+  flex: 0 0 290px;
+  min-width: 290px;
+  min-height: 290px;
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes courses-loop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 .services-grid {
   display: flex;
   flex-direction: row;
@@ -764,27 +811,8 @@ section { padding: 5.5rem 0; }
   .services-grid-layout { gap: 2rem; }
   .services-head { align-items: flex-start; }
   .services-head-cta { align-self: flex-start; }
-  .services-grid {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 1rem;
-    padding: 0.4rem 0.2rem 1.2rem;
-    scroll-padding-left: 0.5rem;
-    scrollbar-width: thin;
-    scrollbar-color: var(--red) #f0f0f0;
-  }
-  .services-grid::-webkit-scrollbar { height: 5px; }
-  .services-grid::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 999px; }
-  .services-grid::-webkit-scrollbar-thumb { background: var(--red); border-radius: 999px; }
-  .services-grid > .service-card {
-    flex: 0 0 260px;
-    min-width: 260px;
-    scroll-snap-align: start;
-  }
+  .courses-carousel-wrap { padding: 0.8rem 0 1.8rem; }
+  .courses-carousel-track { animation-duration: 22s; }
   .ai-top { grid-template-columns: 1fr; }
   .ai-visual { margin-inline: auto; }
   .join { background: #fff; }
@@ -814,17 +842,24 @@ section { padding: 5.5rem 0; }
   .about-benefits small { display: none; }
   .ben-ico { width: 40px; height: 40px; }
 
-  /* ---- services: flex cards row (no stacking) ---- */
+  /* ---- services: endless auto carousel ---- */
   .services-head { text-align: center; justify-content: center; }
   .services-head-copy { text-align: center; }
   .services-head .section-sub { margin-inline: auto; }
   .services-head-cta { align-self: center; }
-  .services-grid > .service-card {
+  .courses-carousel-wrap {
+    padding: 0.5rem 0 1.5rem;
+    mask-image: linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+  }
+  .courses-carousel-track { animation-duration: 18s; }
+  .courses-carousel-group { gap: 1rem; padding-right: 1rem; }
+  .courses-carousel-group .service-card {
+    width: 240px;
     flex: 0 0 240px;
     min-width: 240px;
+    min-height: auto;
     padding: 1.4rem 1.15rem;
-    align-items: flex-start;
-    text-align: left;
   }
   .service-icon { width: 46px; height: 46px; margin-bottom: 1rem; }
   .service-icon svg.lucide { font-size: 1.3rem; }
@@ -866,6 +901,7 @@ section { padding: 5.5rem 0; }
   .reach-card { text-align: center; }
   .reach-card .section-sub { margin-inline: auto; }
   .reach-actions .btn { flex: 1 1 100%; }
+  .reach-hours { flex-direction: column; align-items: center; gap: 0.6rem; }
 
   /* ---- footer: 3 columns on mobile ---- */
   .footer { padding: 3rem 0 0; }
@@ -946,8 +982,10 @@ section { padding: 5.5rem 0; }
   .nav-link { font-size: 0.68rem; }
   /* fall back to single column where two would get too tight */
   .ai-cards, .about-benefits { grid-template-columns: 1fr; }
-  .services-grid > .service-card {
+  .services-grid > .service-card,
+  .courses-carousel-group .service-card {
     flex: 0 0 220px;
+    width: 220px;
     min-width: 220px;
     padding: 1.25rem 1rem;
   }
@@ -969,20 +1007,35 @@ section { padding: 5.5rem 0; }
   .hero { padding-top: 7.5rem; }
 }
 
-/* ---------- Contact / Booking (dark) ---------- */
+/* ---------- Contact / Reach Out (dark) ---------- */
 .reach { background: var(--black); color: var(--text-light); }
 
 .reach-layout {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 3rem;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-.reach-card .section-sub { color: var(--muted-light); max-width: 420px; margin-bottom: 2rem; }
+.reach-card {
+  max-width: 660px;
+  text-align: center;
+}
 
-.reach-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-bottom: 2rem; }
-.reach-actions .btn { flex: 1 1 240px; }
+.reach-card .section-sub {
+  color: var(--muted-light);
+  max-width: 480px;
+  margin-inline: auto;
+  margin-bottom: 2rem;
+}
+
+.reach-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-bottom: 2rem;
+}
+.reach-actions .btn { flex: 0 1 240px; }
 .reach-actions .btn svg.lucide { font-size: 1rem; }
 
 .btn-whatsapp {
@@ -991,7 +1044,13 @@ section { padding: 5.5rem 0; }
 }
 .btn-whatsapp:hover { background: #1fc25a; transform: translateY(-2px); box-shadow: 0 12px 30px -10px rgba(37, 211, 102, 0.5); }
 
-.reach-hours { display: flex; flex-direction: column; gap: 0.6rem; }
+.reach-hours {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.8rem;
+}
 .reach-hours li {
   display: flex;
   align-items: center;
@@ -1052,10 +1111,6 @@ section { padding: 5.5rem 0; }
 }
 .form-privacy svg.lucide { font-size: 0.85rem; color: #17a05a; }
 
-@media (max-width: 880px) {
-  .reach-layout { grid-template-columns: 1fr; }
-}
-
 /* ---------- Lucide icons (21st.dev / shadcn icon set) ---------- */
 svg.lucide { width: 1em; height: 1em; stroke-width: 2; vertical-align: -0.14em; }
 
@@ -1077,4 +1132,6 @@ svg.lucide { width: 1em; height: 1em; stroke-width: 2; vertical-align: -0.14em; 
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; }
   .hero-bg-video { display: none; }
+  .courses-carousel-track { animation: none !important; }
+  .courses-carousel-wrap { overflow-x: auto; }
 }
