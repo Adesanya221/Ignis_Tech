@@ -75,13 +75,18 @@ if (window.Lenis && !window.matchMedia("(prefers-reduced-motion: reduce)").match
   requestAnimationFrame(raf);
 
   // Route anchor clicks through Lenis for buttery scroll-to-section
+  document.documentElement.classList.add("lenis");
   document.addEventListener("click", (e) => {
     const a = e.target.closest('a[href^="#"]');
     if (!a) return;
     const id = a.getAttribute("href");
     if (id.length > 1 && document.querySelector(id)) {
       e.preventDefault();
-      lenis.scrollTo(id, { offset: -70 });
+      // real navbar height (it grows on mobile) + breathing room
+      const navH = navbar ? navbar.offsetHeight : 70;
+      // reveal the target's content immediately so nothing pops in mid-arrival
+      document.querySelectorAll(`${id} .reveal`).forEach((el) => el.classList.add("visible"));
+      lenis.scrollTo(id, { offset: -(navH + 12), duration: 1.1 });
       history.replaceState(null, "", id);
     }
   });

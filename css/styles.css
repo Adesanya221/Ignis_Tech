@@ -35,6 +35,13 @@
 
 html { scroll-behavior: smooth; }
 
+/* Lenis takes over scrolling — native smooth must step aside or they fight (stutter) */
+html.lenis, html.lenis body { scroll-behavior: auto; height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+/* anchor landing clearance for the fixed navbar */
+section[id], footer[id] { scroll-margin-top: 96px; }
+
 body {
   font-family: var(--font-body);
   background: var(--white);
