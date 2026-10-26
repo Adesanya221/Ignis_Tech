@@ -815,6 +815,23 @@ section { padding: 5.5rem 0; }
   .courses-carousel-track { animation-duration: 22s; }
   .ai-top { grid-template-columns: 1fr; }
   .ai-visual { margin-inline: auto; }
+
+  /* about: stack columns, benefits become a 2x2 grid */
+  .about-grid { grid-template-columns: 1fr; }
+  .about-benefits {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.7rem;
+  }
+  .about-benefits li {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.6rem;
+  }
+  .about-benefits small { display: none; }
+
   .join { background: #fff; }
   .join-layout { grid-template-columns: 1fr; }
 }
@@ -826,7 +843,7 @@ section { padding: 5.5rem 0; }
   .hero-copy { text-align: center; }
   .hero-sub { margin-inline: auto; }
   .hero-cta { justify-content: center; }
-  .hero-cta .btn { width: 100%; }
+  .hero-cta .btn { flex: 1 1 0; min-width: 0; padding-inline: 0.8rem; font-size: 0.85rem; }
   .trust-strip { justify-content: center; }
 
   /* ---- about: centered text + 2-across benefit tiles ---- */
@@ -838,7 +855,14 @@ section { padding: 5.5rem 0; }
     grid-template-columns: repeat(2, 1fr);
     gap: 0.7rem;
   }
-  .about-benefits li { padding: 0.85rem 0.7rem; }
+  .about-benefits li {
+    padding: 0.85rem 0.7rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.6rem;
+  }
   .about-benefits small { display: none; }
   .ben-ico { width: 40px; height: 40px; }
 
@@ -981,7 +1005,12 @@ section { padding: 5.5rem 0; }
   .nav-links { gap: 0.65rem; }
   .nav-link { font-size: 0.68rem; }
   /* fall back to single column where two would get too tight */
-  .ai-cards, .about-benefits { grid-template-columns: 1fr; }
+  .ai-cards { grid-template-columns: 1fr; }
+  /* benefits stay a 2-col grid, just compacted */
+  .about-benefits li { padding: 0.7rem 0.45rem; }
+  .about-benefits b { font-size: 0.76rem; }
+  .ben-ico { width: 34px; height: 34px; font-size: 1rem; }
+  .hero-cta .btn { font-size: 0.78rem; padding-inline: 0.5rem; }
   .services-grid > .service-card,
   .courses-carousel-group .service-card {
     flex: 0 0 220px;
