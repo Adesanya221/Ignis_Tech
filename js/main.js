@@ -3,12 +3,14 @@
 /* ---------- Render Lucide icons ---------- */
 if (window.lucide) lucide.createIcons();
 
-/* ---------- Hero background video: pause for reduced-motion users ---------- */
-const heroBgVideo = document.querySelector(".hero-bg-video");
-if (heroBgVideo && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  heroBgVideo.pause();
-  heroBgVideo.removeAttribute("autoplay");
-  heroBgVideo.style.display = "none";
+/* ---------- Hero videos: pause for reduced-motion users ---------- */
+if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  document.querySelectorAll("video[autoplay]").forEach((v) => {
+    v.pause();
+    v.removeAttribute("autoplay");
+  });
+  const heroBg = document.querySelector(".hero-bg-video");
+  if (heroBg) heroBg.style.display = "none";
 }
 
 /* ---------- Navbar background on scroll ---------- */
